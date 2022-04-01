@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    public static GridManager Instance;
     private List<Vector2> pointList = new List<Vector2>();
     private List<Grid> GridList = new List<Grid>();
-    
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         CreatGridsBaseGrid();
@@ -17,7 +23,7 @@ public class GridManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-     //       Debug.Log(GetGridPointbyMouse());
+            //Debug.Log(GetGridPointByMouse());
         }
     }
     /*
@@ -73,15 +79,24 @@ public class GridManager : MonoBehaviour
     /// 通过鼠标获取网格坐标点
     /// </summary>
     /// <returns></returns>
-    public Vector2 GetGridPointbyMouse()
+    public Vector2 GetGridPointByMouse()
+    {
+        return GetGridPointbyWorldPos(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+    }
+
+    /// <summary>
+    /// 通过世界坐标来获取一个网格坐标点
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetGridPointbyWorldPos(Vector2 worldPos)
     {
         float dis = 1000000;
         Vector2 point = new Vector2();
         for(int i = 0; i < GridList.Count; i++)
         {
-            if (Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), GridList[i].Position) < dis)
+            if (Vector2.Distance(worldPos, GridList[i].Position) < dis)
             {
-                dis = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), GridList[i].Position);
+                dis = Vector2.Distance(worldPos, GridList[i].Position);
                 point = GridList[i].Position;
             }
         }

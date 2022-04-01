@@ -30,7 +30,7 @@ public class SkySunManager : MonoBehaviour
     //从天空中生成阳光
     void CreateSun()
     {
-        Sun sun = GameObject.Instantiate<GameObject>(GameManager.Instance.Prefab_Sun, Vector3.zero, Quaternion.identity, transform).GetComponent<Sun>();
+        Sun sun = GameObject.Instantiate<GameObject>(GameManager.Instance.GameConf.Sun, Vector3.zero, Quaternion.identity, transform).GetComponent<Sun>();
         float downY = Random.Range(sunDownMinPosY, sunDownMaxPosY);
         float creatX = Random.Range(createSunMinPosX, createSunMaxPosX);
         sun.InitForSky(downY, creatX, createSunPosY);

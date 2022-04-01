@@ -24,7 +24,7 @@ public class Sun : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-        GameManager.Instance.SunNum += 50;
+        PlayerManager.Instance.SunNum += 50;
         Vector3 sunNum = Camera.main.ScreenToWorldPoint(UIManager.Instance.GetSunNumTextPos());
         sunNum = new Vector3(sunNum.x, sunNum.y, 0);
         FlyAnimation(sunNum);

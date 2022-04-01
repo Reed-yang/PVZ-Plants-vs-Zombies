@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae20b05ef12c424099065d4b2d45838, type: 3}
+  m_Name: GameConf
+  m_EditorClassIdentifier: 
+  Sun: {fileID: 2440102681744574347, guid: d73d1a97696567f4a953942b7f1ae3ec, type: 3}
+  SunFlower: {fileID: 7507533817476821453, guid: 7a3fcf0f1f61c2947a1e7f0ca776041a, type: 3}
+  Peashooter: {fileID: 7282882410705931346, guid: 901addc475cb11e43884d036d564f8f4, type: 3}

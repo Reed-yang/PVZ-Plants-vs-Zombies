@@ -10,16 +10,20 @@ public class UIPantCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     //遮罩图片的img组件
     private Image maskImg;
-
     //冷却时间，几秒钟可以放置一次植物
     public float CDTime;
-
     //当前时间，用于冷却时间的计算
     private float currTimeForCD;
-
     //是否可以放置植物
     private bool canPlace;
-
+    //是否需要放置
+    private bool wantPlace;
+    //用来创建的植物
+    private PlantBase plant;
+    //在网格中的植物，为透明的
+    private PlantBase plantInGrid;
+    //当前卡片所对应的植物类型
+    public PlantType CardPlantType;
     public bool CanPlace
     {get => canPlace;
         set
@@ -40,10 +44,87 @@ public class UIPantCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     
     }
 
+    public bool WantPlace { get => wantPlace;
+        set
+        {
+            wantPlace = value;
+            if (wantPlace)
+            {
+                GameObject prefab = PlantManager.Instance.GetPlantForType(CardPlantType);
+                plant = GameObject.Instantiate<GameObject>(prefab, Vector3.zero, Quaternion.identity, PlantManager.Instance.transform).GetComponent<PlantBase>();
+                plant.InitForCreate(false);
+            }
+            else
+            {
+                if(plant != null)
+                {
+                    Destroy(plant.gameObject);
+                    plant = null;
+                }
+            }
+        }
+    }
+
     void Start()
     {
         maskImg = transform.Find("Mask").GetComponent<Image>();
         CanPlace = false;
+    }
+
+
+    private void Update()
+    {
+        //如果需要放置植物，并且要放置的植物不为空
+        if (WantPlace && plant!=null)
+        {
+            //让植物跟随我们的鼠标
+            Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            plant.transform.position = new Vector3(mousePoint.x, mousePoint.y, 0);
+
+            //如果距离网格较近，网格上出现透明植物
+            if (Vector2.Distance(mousePoint,GridManager.Instance.GetGridPointByMouse()) < 1.5f)
+            {
+                if(plantInGrid == null)
+                {
+                    plantInGrid = GameObject.Instantiate<GameObject>(plant.gameObject, GridManager.Instance.GetGridPointByMouse(), Quaternion.identity, PlantManager.Instance.transform).GetComponent<PlantBase>();
+                    plantInGrid.InitForCreate(true);
+                }
+                else
+                {
+                    plantInGrid.transform.position = GridManager.Instance.GetGridPointByMouse();
+                }
+
+                //如果点击鼠标，即放置植物
+                if (Input.GetMouseButtonDown(0))
+                {
+                    plant.transform.position = GridManager.Instance.GetGridPointByMouse();
+                    plant.InitForPlace();
+                    plant = null;
+                    Destroy(plantInGrid.gameObject);
+                    plantInGrid = null;
+                    WantPlace = false;
+                    CanPlace = false;
+                }
+            }
+            else
+            {
+                if (plantInGrid != null)
+                {
+                    Destroy(plantInGrid.gameObject);
+                    plantInGrid = null;
+                }
+            }
+        }
+        //如果右键取消放置
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (plant != null) Destroy(plant.gameObject);
+            if (plantInGrid != null) Destroy(plantInGrid.gameObject);
+            plant = null;
+            plantInGrid = null;
+            WantPlace = false;
+            
+        }
     }
 
     /// <summary>
@@ -92,6 +173,9 @@ public class UIPantCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!CanPlace) return;
-        Debug.Log("放置植物");
+        if (!WantPlace)
+        {
+            WantPlace = true;
+        }
     }
 }
