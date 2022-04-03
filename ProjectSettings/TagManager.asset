@@ -44,6 +44,9 @@ TagManager:
   - name: Plant
     uniqueID: 568859203
     locked: 0
+  - name: zombie
+    uniqueID: 1750683945
+    locked: 0
   - name: sun
     uniqueID: 2688673015
     locked: 0

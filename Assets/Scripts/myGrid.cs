@@ -18,10 +18,25 @@ public class Grid
 
     public bool HavePlant;
 
+    private PlantBase currPlantBase;
     public Grid(Vector2 point, Vector2 position, bool haveplant)
     {
         Point = point;
         Position = position;
         HavePlant = haveplant;
+    }
+
+    public PlantBase CurrPlantBase { get => currPlantBase; 
+    set{
+            currPlantBase = value;
+            if(currPlantBase == null)
+            {
+                HavePlant = false;
+            }
+            else
+            {
+                HavePlant = true;
+            }
+        }
     }
 }

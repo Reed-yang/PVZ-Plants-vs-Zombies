@@ -8,14 +8,16 @@ public class GridManager : MonoBehaviour
     private List<Vector2> pointList = new List<Vector2>();
     private List<Grid> GridList = new List<Grid>();
 
+
     private void Awake()
     {
         Instance = this;
+        CreatGridsBaseGrid();
     }
 
     void Start()
     {
-        CreatGridsBaseGrid();
+        
     }
 
     // Update is called once per frame
@@ -26,7 +28,7 @@ public class GridManager : MonoBehaviour
             //Debug.Log(GetGridPointByMouse());
         }
     }
-    /*
+    
         private void CreatGridsBaseColl()
         {
             //创建一个预制体网格
@@ -59,8 +61,8 @@ public class GridManager : MonoBehaviour
             }
         }
     }
- */
-    
+
+
     /// <summary>
     /// 基于Grid脚本的形式创建网络
     /// </summary>
@@ -70,10 +72,11 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < 5; j++)
             {
-                GridList.Add(new Grid(new Vector2(i, j), transform.position + new Vector3(1.4f * i, 1.55f * j, 0), false));
+                GridList.Add(new Grid(new Vector2(i, j), transform.position + new Vector3(1.33f * i, 1.63f * j, 0), false));
             }
         }
     }
+
 
     /// <summary>
     /// 通过鼠标获取网格坐标点
@@ -90,16 +93,39 @@ public class GridManager : MonoBehaviour
     /// <returns></returns>
     public Vector2 GetGridPointbyWorldPos(Vector2 worldPos)
     {
+        return GetGridByWorldPos(worldPos).Position; 
+    }
+
+    public Grid GetGridByWorldPos(Vector2 worldPos)
+    {
         float dis = 1000000;
-        Vector2 point = new Vector2();
-        for(int i = 0; i < GridList.Count; i++)
+        Grid grid = null ;
+        for (int i = 0; i < GridList.Count; i++)
         {
             if (Vector2.Distance(worldPos, GridList[i].Position) < dis)
             {
                 dis = Vector2.Distance(worldPos, GridList[i].Position);
-                point = GridList[i].Position;
+                grid = GridList[i];
             }
         }
-        return point;
+        return grid;
     }
+    /// <summary>
+    /// 通过Y轴来寻找一个网格，从下往上0开始
+    /// </summary>
+    /// <param name="verticalNum"></param>
+    /// <returns></returns>
+    public Grid GetGridByVerticalNum(int verticalNum)
+    {
+        for (int i = 0; i < GridList.Count; i++)
+        {
+            if (GridList[i].Point == new Vector2(8, verticalNum))
+            {
+                return GridList[i];
+            }
+        }
+        return null;
+    }
+
+
 }

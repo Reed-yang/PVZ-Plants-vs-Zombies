@@ -6,6 +6,7 @@ public class SunFlower : PlantBase
 {
     protected override void OnInitForPlace()
     {
+        Hp = 300f;
         InvokeRepeating("CreateSun", 3, 3);
     }
     /// <summary>
