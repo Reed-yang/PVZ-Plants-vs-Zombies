@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     private UIPlantCard currCard;
     private LVInfoPanel LVInfoPanel;
     //private SetPanel SetPanel;
-    //private OverPanel OverPanel;
+    private OverPanel OverPanel;
     public UIPlantCard CurrCard
     {
         get => currCard;
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
         LVInfoPanel = transform.Find("LVInfoPanel").GetComponent<LVInfoPanel>();
         //SetPanel = transform.Find("SetPanel").GetComponent<SetPanel>();
         //SetPanel.gameObject.SetActive(false);
-        //OverPanel = transform.Find("OverPanel").GetComponent<OverPanel>();
+        OverPanel = transform.Find("OverPanel").GetComponent<OverPanel>();
     }
 
 
@@ -80,6 +80,6 @@ public class UIManager : MonoBehaviour
 
     public void GameOver()
     {
-        //OverPanel.Over();
+        OverPanel.Over();
     }
 }

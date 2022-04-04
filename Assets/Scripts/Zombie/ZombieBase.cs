@@ -213,7 +213,7 @@ public abstract class ZombieBase : MonoBehaviour
             if (Vector2.Distance(target, pos) < 0.05f)
             {
                 // 触发游戏结束
-                //LVManager.Instance.GameOver();
+                LVManager.Instance.GameOver();
             }
             return;
         }
@@ -291,7 +291,7 @@ public abstract class ZombieBase : MonoBehaviour
         {
             OnDead();
         }
-        // 告诉僵尸管理器，我死了
+        // 告诉僵尸管理器已死亡
         ZombieManager.Instance.RemoveZombie(this);
         StopAllCoroutines();
         currGrid = null;
