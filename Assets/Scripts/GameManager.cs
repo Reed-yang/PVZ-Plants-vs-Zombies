@@ -9,16 +9,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        GameConf = Resources.Load<GameConf>("GameConf");
-    }
-    void Start()
-    {
+        if (Instance == null)
+        {
+            Instance = this;
+            Application.targetFrameRate = 60;
+            GameConf = Resources.Load<GameConf>("GameConf");
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

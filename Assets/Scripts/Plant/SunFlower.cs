@@ -4,19 +4,37 @@ using UnityEngine;
 
 public class SunFlower : PlantBase
 {
+    // 创建阳光需要的时间
+    private float createSunTime = 4;
+    // 变成金色需要的时间
+    private float goldWantTime = 1;
+    public override float MaxHp
+    {
+        get
+        {
+            return 300;
+        }
+    }
+
     protected override void OnInitForPlace()
     {
-        Hp = 300f;
-        InvokeRepeating("CreateSun", 3, 3);
+        InvokeRepeating("CreateSun", createSunTime, createSunTime);
     }
+
     /// <summary>
-    /// 太阳花创建阳光
+    /// 创建阳光
     /// </summary>
     private void CreateSun()
     {
-        Sun sun = GameObject.Instantiate<GameObject>(GameManager.Instance.GameConf.Sun, transform.position, Quaternion.identity).GetComponent<Sun>();
+        //StartCoroutine(DoCreatSun());
+        StartCoroutine(ColorEF(goldWantTime, new Color(1, 0.6f, 0), 0.05F, InstantiateSun));
+    }
+
+    private void InstantiateSun()
+    {
+        Sun sun = PoolManager.Instance.GetObj(GameManager.Instance.GameConf.Sun).GetComponent<Sun>();
         sun.transform.SetParent(transform);
-        //让阳光进行跳跃动画
-        sun.JumpAnimation();
+        // 让阳光进行跳跃动画
+        sun.InitForSunFlower(transform.position);
     }
 }

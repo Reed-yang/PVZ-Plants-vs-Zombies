@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Zombie
   layers:
   - Default
   - TransparentFX
@@ -46,6 +47,9 @@ TagManager:
     locked: 0
   - name: zombie
     uniqueID: 1750683945
+    locked: 0
+  - name: Bullet
+    uniqueID: 1118987615
     locked: 0
   - name: sun
     uniqueID: 2688673015
